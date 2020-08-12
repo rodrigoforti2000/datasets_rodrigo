@@ -1,10 +1,13 @@
 #carregando os dados
 ny = read.table("NewYork-Menor65.txt")
-
+head(ny)
 
 #substituindo dados faltantes
 ny[is.na(ny$V2),]
 ny[4571,2] = mean(ny[c(4570,4572),2])
+
+#Começando no domingo
+ny = ny[4:length(ny$V2),]
 
 
 #Vendo os dados
@@ -51,9 +54,9 @@ plot((arma11$residuals - mean(arma11$residuals))/sd(arma11$residuals))
 #Visualizando ARMA11
 arma11fitted <- ny_past - arma11$residuals
 ts.plot(ny_past, col = "lightgrey")
-lines(arma11fitted, col = "#1F77B4")
-lines(arma11fitted + 2* sqrt(arma11$sigma2), col ="red")
-lines(arma11fitted - 2* sqrt(arma11$sigma2), col ="red")
+lines(arma11fitted)
+lines(arma11fitted + 3* sqrt(arma11$sigma2), col ="lightblue")
+lines(arma11fitted - 3* sqrt(arma11$sigma2), col ="lightblue")
 
 #Predição ARMA11
 t_pred = (length(ny_sem) - 25):length(ny_sem)
@@ -76,3 +79,4 @@ ma1 = arima(ny_past, c(0,0,1), xreg = c(t))
 acf(ma1$residuals)
 pacf(ma1$residuals)
 plot((ma1$residuals - mean(ma1$residuals))/sd(ma1$residuals))
+
