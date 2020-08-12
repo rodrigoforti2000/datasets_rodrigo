@@ -64,3 +64,15 @@ lines(arma11pred$pred, col = "#1F77B4")
 lines(x = t_pred, ny_future, col = "black")
 lines(x = t_pred, ny_future + 2*28.84, col = "red")
 lines(x = t_pred, ny_future - 2*28.84, col = "red")
+
+#AR1: Muito ruim
+ar1 = arima(ny_past, c(1,0,0,), xreg = c(t))
+acf(ar1$residuals)
+pacf(ar1$residuals)
+plot((ar1$residuals - mean(ar1$residuals))/sd(ar1$residuals))
+
+#MA1: Muito ruim
+ma1 = arima(ny_past, c(0,0,1), xreg = c(t))
+acf(ma1$residuals)
+pacf(ma1$residuals)
+plot((ma1$residuals - mean(ma1$residuals))/sd(ma1$residuals))
